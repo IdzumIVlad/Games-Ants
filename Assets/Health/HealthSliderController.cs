@@ -7,7 +7,7 @@ public class HealthSliderController : MonoBehaviour
     [SerializeField]
     private HealthSlider healthSliderPrefab;
     private Dictionary<HealthResources, HealthSlider> healthSliders = new Dictionary<HealthResources, HealthSlider>();
-    
+    public GameObject children;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class HealthSliderController : MonoBehaviour
     {
         if (healthSliders.ContainsKey(health) == false)
         {
-            HealthSlider HealthSlider = Instantiate(healthSliderPrefab, transform);
+            HealthSlider HealthSlider = Instantiate(healthSliderPrefab,  children.transform);
             healthSliders.Add(health, HealthSlider);
             HealthSlider.SetHealth(health);
         }

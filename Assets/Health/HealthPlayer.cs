@@ -6,10 +6,10 @@ using TMPro;
 
 public class HealthPlayer : MonoBehaviour
 {
-    public float fullHealth = 10f;
+    public float fullHealth = 3f;
     public float increaseHealth = 1f;
     public bool isLive;
-    public float currentHealth;
+    public float currentHealth = 3f;
 
     public Transform homePoint;
     public CanvasGroup dieTableUI;

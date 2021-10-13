@@ -8,6 +8,7 @@ public class HealthBarController : MonoBehaviour
     private HealthBar healthBarPrefab;
 
     private Dictionary<HealthAI, HealthBar> healthBars = new Dictionary<HealthAI, HealthBar>();
+    public GameObject children;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class HealthBarController : MonoBehaviour
     {
         if(healthBars.ContainsKey(health) == false)
         {
-            var healthBar = Instantiate(healthBarPrefab, transform);
+            var healthBar = Instantiate(healthBarPrefab, children.transform);
             healthBars.Add(health, healthBar);
             healthBar.SetHealth(health);
         }

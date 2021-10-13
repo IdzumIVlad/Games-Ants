@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 using DG.Tweening;
-using CI.QuickSave;
 
 public class Bank : MonoBehaviour
 {
@@ -61,94 +60,84 @@ public class Bank : MonoBehaviour
 
     private void Start()
     {
-        if (QuickSaveReader.Create("Bank") == null) return;
-        var reader = QuickSaveReader.Create("Bank");
-        money = reader.Read<int>("money");
-        appleStorage.currentAmount = reader.Read<int>("appleStorage.currentAmount");
-        seedStorage.currentAmount = reader.Read<int>("seedStorage.currentAmount");
-        mushroomStorage.currentAmount = reader.Read<int>("mushroomStorage.currentAmount");
-        processingRoom.roomLvl = reader.Read<int>("processingRoom.roomLvl");
-        antMother.currentAmount = reader.Read<int>("antMother.currentAmount");
 
-        antMother.roomCapacity = reader.Read<int>("antMother.roomCapacity");
-        antMother.speedAntAI = reader.Read<int>("antMother.speedAntAI");
-        antMother.roomLevel = reader.Read<int>("antMother.roomLevel");
-        expirience.exp = reader.Read<int>("expirience.exp");
-        expirience.lvl = reader.Read<int>("expirience.lvl");
-        //healthPlayer.fullHealth = reader.Read<int>("healthPlayer.fullHealth");
-        //playerAttack.attackPoint = reader.Read<int>("playerAttack.attackPoint");
-        //enemyHealth.expAward = reader.Read<int>("enemyHealth.expAward");
-        //enemyHealth.fullHealth = reader.Read<float>("enemyHealth.fullHealth");
+        money = PlayerPrefs.GetInt("money", 10);
+        appleStorage.currentAmount = PlayerPrefs.GetInt("appleStorage.currentAmount", 2);
+        appleStorage.roomLevel = PlayerPrefs.GetInt("appleStorage.roomLevel", 1);
+        appleStorage.roomCapacity = PlayerPrefs.GetInt("appleStorage.roomCapacity", 4);
+
+        seedStorage.currentAmount = PlayerPrefs.GetInt("seedStorage.currentAmount", 2);
+        seedStorage.roomLevel = PlayerPrefs.GetInt("seedStorage.roomLevel", 1);
+        seedStorage.roomCapacity = PlayerPrefs.GetInt("seedStorage.roomCapacity", 3);
+
+        mushroomStorage.currentAmount = PlayerPrefs.GetInt("mushroomStorage.currentAmount", 2);
+        mushroomStorage.roomLevel = PlayerPrefs.GetInt("mushroomStorage.roomLevel", 1);
+        mushroomStorage.roomCapacity = PlayerPrefs.GetInt("mushroomStorage.roomCapacity", 2);
+
+        processingRoom.roomLvl = PlayerPrefs.GetInt("processingRoom.roomLvl", 0);
+
+        antMother.currentAmount = PlayerPrefs.GetInt("antMother.currentAmount", 0);
+        antMother.roomCapacity = PlayerPrefs.GetInt("antMother.roomCapacity", 1);
+        antMother.speedAntAI = PlayerPrefs.GetFloat("antMother.speedAntAI", 2);
+        antMother.roomLevel = PlayerPrefs.GetInt("antMother.roomLevel", 1);
+
+        expirience.exp = PlayerPrefs.GetInt("expirience.exp", 0);
+        expirience.lvl = PlayerPrefs.GetInt("expirience.lvl", 1);
+
+        playerAttack.attackPoint = PlayerPrefs.GetInt("playerAttack.attackPoint", 3);
+        healthPlayer.fullHealth = PlayerPrefs.GetFloat("healthPlayer.fullHealth", 3);
+
+        enemyHealth.expAward = PlayerPrefs.GetInt("enemyHealth.expAward");
+        enemyHealth.fullHealth = PlayerPrefs.GetFloat("enemyHealth.fullHealth", 10);
 
     }
 
 
     private void OnApplicationPause(bool pause)
     {
-        var writer = QuickSaveWriter.Create("Bank");
-        writer.Write("money", money);
+        if (pause) SaveData();
 
-        writer.Write("appleStorage.currentAmount", appleStorage.currentAmount);
-        writer.Write("appleStorage.roomLevel", appleStorage.roomLevel);
-        writer.Write("appleStorage.roomCapacity", appleStorage.roomCapacity);
-
-        writer.Write("seedStorage.currentAmount", seedStorage.currentAmount);
-        writer.Write("seedStorage.roomLevel", seedStorage.roomLevel);
-        writer.Write("seedStorage.roomCapacity", seedStorage.roomCapacity);
-
-        writer.Write("mushroomStorage.currentAmount", mushroomStorage.currentAmount);
-        writer.Write("mushroomStorage.roomLevel", mushroomStorage.roomLevel);
-        writer.Write("mushroomStorage.roomCapacity", mushroomStorage.roomCapacity);
-
-        writer.Write("processingRoom.roomLvl", processingRoom.roomLvl);
-
-        writer.Write("antMother.currentAmount", antMother.currentAmount);
-        writer.Write("antMother.roomCapacity", antMother.roomCapacity);
-        writer.Write("antMother.speedAntAI", antMother.speedAntAI);
-        writer.Write("antMother.roomLevel", antMother.roomLevel);
-
-        writer.Write("expirience.exp", expirience.exp);
-        writer.Write("expirience.lvl", expirience.lvl);
-
-        writer.Write("playerAttack.attackPoint", playerAttack.attackPoint);
-        writer.Write("expirience.lvl", healthPlayer.fullHealth);
-
-        writer.Write("enemyHealth.expAward", enemyHealth.expAward);
-        writer.Write("enemyHealth.fullHealth", enemyHealth.fullHealth);
-        writer.Commit();
     }
 
     private void OnApplicationQuit()
     {
-        var writer = QuickSaveWriter.Create("Bank");
-        writer.Write("money", money);
-
-        writer.Write("appleStorage.currentAmount", appleStorage.currentAmount);
-        writer.Write("appleStorage.roomLevel", appleStorage.roomLevel);
-        writer.Write("appleStorage.roomCapacity", appleStorage.roomCapacity);
-
-        writer.Write("seedStorage.currentAmount", seedStorage.currentAmount);
-        writer.Write("seedStorage.roomLevel", seedStorage.roomLevel);
-        writer.Write("seedStorage.roomCapacity", seedStorage.roomCapacity);
-
-        writer.Write("mushroomStorage.currentAmount", mushroomStorage.currentAmount);
-        writer.Write("mushroomStorage.roomLevel", mushroomStorage.roomLevel);
-        writer.Write("mushroomStorage.roomCapacity", mushroomStorage.roomCapacity);
-
-        writer.Write("processingRoom.roomLvl", processingRoom.roomLvl);
-
-        writer.Write("antMother.currentAmount", antMother.currentAmount);
-        writer.Write("antMother.roomCapacity", antMother.roomCapacity);
-        writer.Write("antMother.speedAntAI", antMother.speedAntAI);
-        writer.Write("antMother.roomLevel", antMother.roomLevel);
-
-        writer.Write("expirience.exp", expirience.exp);
-        writer.Write("expirience.lvl", expirience.lvl);
-
-        writer.Write("playerAttack.attackPoint", playerAttack.attackPoint);
-        writer.Write("expirience.lvl", healthPlayer.fullHealth);
-        writer.Commit();
+        SaveData();
     }
+
+
+    private void SaveData()
+    {
+        PlayerPrefs.SetInt("money", money);
+        PlayerPrefs.SetInt("appleStorage.currentAmount", appleStorage.currentAmount);
+        PlayerPrefs.SetInt("appleStorage.roomLevel", appleStorage.roomLevel);
+        PlayerPrefs.SetInt("appleStorage.roomCapacity", appleStorage.roomCapacity);
+
+        PlayerPrefs.SetInt("seedStorage.currentAmount", seedStorage.currentAmount);
+        PlayerPrefs.SetInt("seedStorage.roomLevel", seedStorage.roomLevel);
+        PlayerPrefs.SetInt("seedStorage.roomCapacity", seedStorage.roomCapacity);
+
+        PlayerPrefs.SetInt("mushroomStorage.currentAmount", mushroomStorage.currentAmount);
+        PlayerPrefs.SetInt("mushroomStorage.roomLevel", mushroomStorage.roomLevel);
+        PlayerPrefs.SetInt("mushroomStorage.roomCapacity", mushroomStorage.roomCapacity);
+
+        PlayerPrefs.SetInt("processingRoom.roomLvl", processingRoom.roomLvl);
+
+        PlayerPrefs.SetInt("antMother.currentAmount", antMother.currentAmount);
+        PlayerPrefs.SetInt("antMother.roomCapacity", antMother.roomCapacity);
+        PlayerPrefs.SetFloat("antMother.speedAntAI", antMother.speedAntAI);
+        PlayerPrefs.SetInt("antMother.roomLevel", antMother.roomLevel);
+
+        PlayerPrefs.SetInt("expirience.exp", expirience.exp);
+        PlayerPrefs.SetInt("expirience.lvl", expirience.lvl);
+
+        PlayerPrefs.SetInt("playerAttack.attackPoint", playerAttack.attackPoint);
+        PlayerPrefs.SetFloat("healthPlayer.fullHealth", healthPlayer.fullHealth);
+
+        PlayerPrefs.SetInt("enemyHealth.expAward", enemyHealth.expAward);
+        PlayerPrefs.SetFloat("enemyHealth.fullHealth", enemyHealth.fullHealth);
+        PlayerPrefs.Save();
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -171,7 +160,7 @@ public class Bank : MonoBehaviour
         seedCurrentLevelText.text = seedStorage.roomLevel.ToString();
         seedCostText.text = (seedStorage.roomCapacity + 12).ToString();
 
-        
+
         currentSpeedAIText.text = antMother.speedAntAI.ToString();
         currentSpeedAICostText.text = (antMother.speedAntAI * 10).ToString();
 
@@ -179,12 +168,13 @@ public class Bank : MonoBehaviour
         currentSpeedPlayerCostText.text = (mover.speed * 10).ToString();
 
         currentHealthPlayerText.text = healthPlayer.fullHealth.ToString();
-        currentHealthlayerCostText.text = ((int)(healthPlayer.fullHealth * healthPlayer.fullHealth * (1 + Mathf.Log(healthPlayer.fullHealth, 6f)))).ToString(); //ecsperimenty eba
+        currentHealthlayerCostText.text = ((int)(healthPlayer.fullHealth * healthPlayer.fullHealth * (1 + Mathf.Log(healthPlayer.fullHealth, 5f)))).ToString(); //ecsperimenty eba
+        //Debug.Log((int)(healthPlayer.fullHealth * healthPlayer.fullHealth * (1 + Mathf.Log(healthPlayer.fullHealth, 5f))));
 
         currentDamagePlayerText.text = playerAttack.attackPoint.ToString();
         currentDamagePlayerCostText.text = ((int)(playerAttack.attackPoint * playerAttack.attackPoint * (1 + Mathf.Log(playerAttack.attackPoint, 5f)))).ToString();
 
-        if (processingRoom.roomLvl == 0) 
+        if (processingRoom.roomLvl == 0)
         {
             processingCurrentLevelText.text = processingRoom.roomLvl.ToString();
             processingCostText.text = 12.ToString();
@@ -194,7 +184,7 @@ public class Bank : MonoBehaviour
             processingCurrentLevelText.text = "MAX";
             processingCostText.text = "MAX";
             var buttonProcessingUp = GameObject.FindGameObjectWithTag("ProcessingByeButton").GetComponent<Button>();
-            if(buttonProcessingUp != null)
+            if (buttonProcessingUp != null)
                 buttonProcessingUp.interactable = false;
         }
     }
